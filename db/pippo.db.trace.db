@@ -1,0 +1,3 @@
+2021-10-12 15:24:08 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TODO_ITEM" not found; SQL statement:
+select todoitem0_.id as id1_0_, todoitem0_.completed as complete2_0_, todoitem0_.title as title3_0_ from todo_item todoitem0_ [42102-200]

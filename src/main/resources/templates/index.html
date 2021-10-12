@@ -1,0 +1,62 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Todo</title>
+		<link rel="stylesheet" th:href="@{/webjars/todomvc-common/base.css}">
+		<link rel="stylesheet" th:href="@{/webjars/todomvc-app-css/index.css}">
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todo list</h1>
+				<form th:action="@{/}" method="post" th:object="${item}">
+					<input class="new-todo" placeholder="Enter your remaining works." autofocus th:field="*{title}">
+				</form>
+			</header>
+			<section class="main" th:if="${totalNumberOfItems > 0}">
+				<ul class="todo-list" th:remove="all-but-first">
+					<li th:insert="fragment :: todoItem(${item})" th:each="item : ${todos}" th:remove="tag">
+					</li>
+				</ul>
+			</section>
+			<footer class="footer" th:if="${totalNumberOfItems > 0}">
+				<th:block th:unless="${numberOfActiveItems == 1}">
+					<span class="todo-count"><strong th:text="${numberOfActiveItems}">0</strong> items left</span>
+				</th:block>
+				<th:block th:if="${numberOfActiveItems == 1}">
+					<span class="todo-count"><strong>1</strong> item left</span>
+				</th:block>
+				<ul class="filters">
+					<li>
+						<a th:href="@{/}"
+						   th:classappend="${filter.name() == 'ALL'?'selected':''}">All</a>
+					</li>
+					<li>
+						<a th:href="@{/active}"
+						   th:classappend="${filter.name() == 'ACTIVE'?'selected':''}">Active</a>
+					</li>
+					<li>
+						<a th:href="@{/completed}"
+						   th:classappend="${filter.name() == 'COMPLETED'?'selected':''}">Completed</a>
+					</li>
+				</ul>
+				<form th:action="@{/clear_completed}" th:method="delete"
+					  th:if="${numberOfCompletedItems > 0}">
+					<button class="clear-completed">Clear completed</button>
+				</form>
+                <form th:action="@{/mark_all_as_completed}" th:method="get" th:if="${numberOfActiveItems > 0}">
+                    <button class="clear-completed">Mark all as complete</button>
+                </form>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>Created by <a href="http://github.com/probal25">probal</a></p>
+		</footer>
+		<script th:src="@{/webjars/todomvc-common/base.js}"></script>
+	</body>
+</html>
